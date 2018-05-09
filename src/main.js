@@ -8,11 +8,16 @@ Vue.use(vueRouter)
 //导入自定义路由文件
 import router from "./router.js"
 
+//导入并安装vue-resource模块来获取数据
+import VueResource from "vue-resource"
+Vue.use(VueResource)
 
 //按需导入MintUI组件
-import { Header } from 'mint-ui';
+import { Header,Swipe, SwipeItem } from 'mint-ui'
 //注册MintUI组件到Vue
-Vue.component(Header.name, Header);
+Vue.component(Header.name, Header)
+Vue.component(Swipe.name, Swipe)
+Vue.component(SwipeItem.name, SwipeItem)
 
 //导入mui框架的样式文件
 import "./lib/mui/css/mui.min.css"
