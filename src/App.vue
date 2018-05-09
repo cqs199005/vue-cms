@@ -37,7 +37,8 @@
 
 <style lang="scss" scoped>
 	.container {
-		margin-top: 40px;
+		padding-top: 40px;
+		padding-bottom: 50px;
 	}
 
 	// 添加切换动画效果

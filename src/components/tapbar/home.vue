@@ -9,10 +9,10 @@
         <!-- 六宫格菜单 -->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
-                <a href="#">
+                <router-link to="/news/NewsList">
                     <img src="../../images/menu1.png" alt="">
                     <div class="mui-media-body">新闻资讯</div>
-                </a>
+                </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
                 <a href="#">
@@ -85,7 +85,7 @@
         },
         methods: {
             getLunbo() {
-                this.$http.get("http://vue.studyit.io/api/getlunbo").then(res => {
+                this.$http.get("api/getlunbo").then(res => {
                     if (res.body.status === 0) {
                         //获取数据成功
                         this.lunboList = res.body.message;
