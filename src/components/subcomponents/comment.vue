@@ -2,8 +2,8 @@
     <div class="comment-content">
         <h3 class="com-t">发表评论</h3>
         <hr>
-        <textarea placeholder="请输入要BB的内容(最多吐槽120字)" maxlength="120"></textarea>
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <textarea placeholder="请输入要BB的内容(最多吐槽120字)" maxlength="120" v-model="msg"></textarea>
+        <mt-button type="primary" size="large" @click="sendcom">发表评论</mt-button>
         <div class="cmt-box">
             <div class="cmt-list" v-for="(item, i) in comments" :key="item.id">
                 <div class="cmt-list-t">
@@ -34,7 +34,8 @@
                     {id:3,user_name:"匿名用户",add_time:new Date(),content:""},
                     {id:4,user_name:"匿名用户",add_time:new Date(),content:"我来评论了!!!!!!!!哇哈哈哈"},
                     {id:5,user_name:"匿名用户",add_time:new Date(),content:"我来评论了!!!!!!!!哇哈哈哈"}
-                ]
+                ],
+                msg:""
             }
         },
         creater(){
@@ -56,6 +57,28 @@
                 //每次点击加载更多,页码加1
                 this.pageIndex++;
                 this.getComment(); 
+            },
+            sendcom(){
+                //判断输入内容是否为空
+                if(this.msg.length === 0) {
+                    return Toast("输入内容不允许为空!")
+                }
+               
+                //下面这是测试用假数据
+                 var newCom = {id:Date.now(),user_name:"匿名用户",add_time:new Date(),content:this.msg}
+                        this.comments.unshift(newCom)
+                        this.msg = ""
+                //如果不为空,发生ajax请求
+                this.$http.post("api/postcomment/" + this.$route.params,{content:this.msg}).then(function(res){
+                    if(res.body.status === 0) {
+                        //手动创建一个评论对象,添加到数组的第一项进行渲染,这样能保证在第一楼显示
+                        var newCom = {id:Date.now(),user_name:"匿名用户",add_time:new Date(),content:this.msg}
+                        this.comments.unshift(newCom)
+                        this.msg = ""
+                    }else {
+                        Toast("发表评论失败!")
+                    }
+                })
             }
         },
         props:["id"]  //获取父组件传过来的ID值
