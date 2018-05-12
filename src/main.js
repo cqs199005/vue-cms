@@ -40,6 +40,52 @@ import "./lib/mui/css/icons-extra.css"
 import VuePreview from 'vue-preview'
 Vue.use(VuePreview)
 
+//导入Vuex模块
+import Vuex from "vuex"
+Vue.use(Vuex)
+
+//每次页面一加载,从本地获取数据
+var cart = JSON.parse(localStorage.getItem("cart") || "[]")
+
+//创建Vuex实例
+var store = new Vuex.Store({
+    state:{  //存储数据
+        cart:cart //购物车数据
+    },
+    mutations:{  //方法调用
+        //加入购物车,加入前先判断购物车里有没有一样的商品,有的话直接加数量就行
+        
+        addcart(state,buyInfo) {
+            console.log(111);
+            var flag = false  //这个用来做标识符
+            state.cart.some(item=>{
+                if(item.id == buyInfo.id) {
+                    //表示购物车有
+                    console.log(1111);
+                    item.count += parseInt(buyInfo.count);
+                    flag = true;
+                    return true //结束循环
+                }
+            })
+            if(!flag) {
+                state.cart.push(buyInfo);
+            }
+            //把购物车数据保存在本地存储
+            localStorage.setItem('cart',JSON.stringify(state.cart))
+        }
+    },
+    getters:{  //固定数据获取
+        //购物车徽标数据
+        badgeCount(state) {
+            //循环遍历获取
+            var c = 0;
+            state.cart.forEach(item=>{
+                c += item.count
+            })
+            return c
+        }
+    }
+})
 
 
 //导入App模块
@@ -56,4 +102,5 @@ var vm = new Vue({
     el:"#app",
     render:c=>c(app),  //渲染组件
     router,  //注册路由对象
+    store,   // 挂载状态管理组件
 })

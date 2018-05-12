@@ -1,11 +1,8 @@
 <template>
     <div>
-        <!-- 首頁轮播 -->
-        <mt-swipe>
-            <mt-swipe-item v-for="item in lunboList" :key="item.url">
-                <img :src="item.img" alt="">
-            </mt-swipe-item>
-        </mt-swipe>
+        <!-- 首頁轮播,使用组件 -->
+        <!-- :isfull="true" 这个属性自定义的,用来设置图片宽度是否为100% -->
+       <swiper :lunboList="lunboList" :isfull="true"></swiper>
         <!-- 六宫格菜单 -->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
@@ -53,6 +50,10 @@
     import {
         Toast
     } from 'mint-ui';
+
+    //引入轮播组件
+    import swiper from "../subcomponents/swiper.vue"
+
     //暴露VUE实例对象
     export default {
         data() {
@@ -77,7 +78,7 @@
                         img: "/src/images/xue5.jpg",
                         url: "5"
                     },
-                ]
+                ],
             }
         },
         created() {
@@ -94,30 +95,14 @@
                     }
                 })
             }
+        },
+        components:{
+            swiper
         }
     }
 </script>
 
 <style lang="scss" scoped>
-// 轮播图样式
-    .mint-swipe {
-        height: 200px;
-        .mint-swipe-item {
-            &:nth-child(1) {
-                background-color: red;
-            }
-            &:nth-child(2) {
-                background-color: skyblue;
-            }
-            &:nth-child(3) {
-                background-color: yellow;
-            }
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
 
     // 六宫格样式
     .mui-grid-view.mui-grid-9 {
