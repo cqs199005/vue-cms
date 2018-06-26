@@ -9,7 +9,18 @@
 </template>
 
 <script>
-    
+export default {
+    data(){
+        return {
+            data:[]
+        }
+    },
+    created(){
+        this.$http.get('/my/info').then(res=>res.body).then(res=>{
+      console.log(res.data);
+    })
+    }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -17,6 +17,9 @@ Vue.http.options.root = "http://vue.studyit.io"
 Vue.http.options.emulateJSON = true
 
 
+//引入mock假数据拦截
+import mock from './mock/mock.js'
+
 //按需导入MintUI组件
 // import { Header,Swipe, SwipeItem,Button, Lazyload } from 'mint-ui'
 // //注册MintUI组件到Vue
